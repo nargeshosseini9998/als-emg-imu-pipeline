@@ -1,4 +1,4 @@
-# ALS EMG/IMU exoskeleton pipeline
+# als-emg-imu-pipeline
 
 Reproducible analysis pipeline behind the MSc thesis
 **"Data-Driven Functional Classification of ALS and Adaptive Assistive Control Strategies"**
@@ -19,8 +19,8 @@ clustering, and a leave-one-subject-out classifier with SHAP attribution.
 ## 1. Installation
 
 ```bash
-git clone <this repo>
-cd als-emg-exo-pipeline
+git clone https://github.com/nargeshosseini9998/als-emg-imu-pipeline.git
+cd als-emg-imu-pipeline
 python -m venv .venv && source .venv/bin/activate      # optional
 pip install -e .                                       # installs the `alsexo` package + deps
 pytest tests/                                          # no data needed
@@ -79,33 +79,30 @@ python -m alsexo.cli 9:step_g_lmm     # one Phase-9 step
 **A note on Phase 4.** Episode detection was not a single automatic algorithm. Three detector
 families were used, and for eleven ALS subjects the family and parameters were chosen by
 visual inspection of the gate signal; five trials had episodes removed by hand. All of this is
-disclosed and recorded in the two YAML files above so that the exact thesis episode set can be
+disclosed and recorded in the two YAML files above so that the exact episode set can be
 regenerated. See `docs/METHODS.md` §4 and §12.
 
 ## 5. Repository layout
 
 ```
 configs/            YAML parameters and per-subject decisions
-docs/METHODS.md     methods, rewritten from the code (single source of truth)
-notebooks/legacy/   original notebooks (outputs stripped, comments translated) — provenance only
-scripts/            gen_phase4_config.py (rebuilds phase4_episodes.yaml from the original rules)
+docs/METHODS.md     methods description (single source of truth for the methodology)
+notebooks/legacy/   analysis notebooks (outputs stripped, comments translated)
+scripts/            gen_phase4_config.py (rebuilds phase4_episodes.yaml from the detector rules)
 src/alsexo/         the package (one module per phase; Phase 9 = one module per step)
 tests/              data-free smoke tests
 data/               NOT versioned; raw and processed data live here at run time
 ```
 
-## 6. Reproducing the thesis numbers
+## 6. Reproducing the results
 
-Run `python -m alsexo.cli all` on the original data. The reference values are the CSV files in
-`data/processed/phase_09_stats/` and `phase_10_supervised/` produced by the notebooks in
-`notebooks/legacy/` (the package reproduces their logic exactly, quirks included — grep for
-`# QUIRK` in `src/alsexo/events.py`). Note that a few figures quoted in earlier drafts of the
-thesis came from an older run with n = 21; the current outputs (n = 22) are the ones the code
-regenerates (see `docs/METHODS.md` §9.4).
+Run `python -m alsexo.cli all` on the original data. All statistical outputs are written to
+`data/processed/phase_09_stats/` and `data/processed/phase_10_supervised/` (these are generated
+locally and are not part of the repository, since they derive from the clinical data).
 
 ## 7. Citation
 
-If you use this code, please cite the thesis (see `CITATION.cff` once the final version is deposited).
+If you use this code, please cite the thesis (see `CITATION.cff`).
 
 ## License
 
