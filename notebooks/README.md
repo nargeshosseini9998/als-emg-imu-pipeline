@@ -1,16 +1,11 @@
 # notebooks/
 
-`legacy/` contains the original analysis notebooks exactly as used to produce the thesis
-results, with three modifications only:
+`legacy/` contains the original analysis notebooks used to produce the thesis
+results (outputs stripped; absolute paths replaced by `<PROJECT_ROOT>`).
 
-1. all cell outputs were stripped (they contained ~35 MB of tables/figures);
-2. Persian comments and messages were translated to English;
-3. the absolute project path was replaced by `<PROJECT_ROOT>` (edit it, or run the
-   `alsexo` package instead — see the main README).
-
-They are kept for provenance: every rule in `configs/phase4_episodes.yaml` and
-`configs/manual_curation.yaml` cites the notebook and cell it came from. The
-maintained, runnable implementation is the `alsexo` package (`src/alsexo/`).
+The maintained, runnable implementation is the `alsexo` package (`src/alsexo/`),
+which reproduces the same analysis in a configurable, testable form. The notebooks
+are kept for reference and traceability of the published results.
 
 Mapping notebook -> package module
 

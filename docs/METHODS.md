@@ -3,10 +3,8 @@
 **Data-Driven Functional Classification of ALS and Adaptive Assistive Control Strategies**
 MSc thesis, Università degli Studi di Napoli Federico II / PRISMA Lab.
 
-This document describes the pipeline **exactly as it is implemented in `src/alsexo/`**. It
-replaces the earlier "Methods Justification Map" (Parts 1–5), which had been written against
-a previous revision of the code. Wherever the two differed, the code was taken as the
-reference. Every parameter quoted below is read from `configs/*.yaml` by the code; nothing is
+This document describes the pipeline **exactly as it is implemented in `src/alsexo/`**.
+Every parameter quoted below is read from `configs/*.yaml` by the code; nothing is
 hard-coded. Section 12 lists, explicitly, every place where a decision was made by hand.
 
 Tag legend (as in the original map): 🟦 standard method (cite) · 🟨 standard method adapted
