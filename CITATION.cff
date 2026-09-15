@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the thesis below."
+title: "ALS EMG/IMU exoskeleton pipeline"
+type: software
+authors:
+  - family-names: "<surname>"
+    given-names: "Narges"
+    affiliation: "Università degli Studi di Napoli Federico II, PRISMA Lab"
+version: 1.0.0
+date-released: "2026-09"
+license: MIT
+preferred-citation:
+  type: thesis
+  title: "Data-Driven Functional Classification of ALS and Adaptive Assistive Control Strategies"
+  authors:
+    - family-names: "<surname>"
+      given-names: "Narges"
+  institution: "Università degli Studi di Napoli Federico II"
+  year: 2026

@@ -1,0 +1,28 @@
+# --- data: NEVER commit clinical data ---
+data/
+!data/README.md
+figures/
+*.parquet
+*.csv
+!configs/**/*.csv
+*.shpf
+*.mp4
+
+# --- python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.env
+
+# --- notebooks: outputs are stripped by nbstripout (see README) ---
+.ipynb_checkpoints/
+
+# --- OS / editors ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

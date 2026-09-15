@@ -1,0 +1,45 @@
+# Subjects entering the pipeline, and documented exclusions.
+#
+# Raw data folder layout expected under data/raw/:
+#   <Subject>/EMG&IMUTest/<task>_<exo|noexo>.csv   (Trigno Discover CSV export)
+#   <Subject>/MVC/...                              (not used by the pipeline)
+#
+# Task file names: drinking, lifting, pick&place_high, pick&place_low (x exo / noexo).
+# Not every subject has every task (see data/processed/qc/00_IO_ALL.csv after Phase 0).
+
+subjects:
+  - ALS_Subject_1
+  - ALS_Subject_2
+  - ALS_Subject_3
+  - ALS_Subject_4
+  - ALS_Subject_5
+  - ALS_Subject_7
+  - ALS_Subject_8
+  - ALS_Subject_9
+  - ALS_Subject_10
+  - ALS_Subject_11
+  - ALS_Subject_12
+  - ALS_Subject_13
+  - ALS_Subject_14
+  - ALS_Subject_15
+  - ALS_Subject_16
+  - Healthy_Subject_1
+  - Healthy_Subject_2
+  - Healthy_Subject_3
+  - Healthy_Subject_4
+  - Healthy_Subject_5
+  - Healthy_Subject_6
+  - Healthy_Subject_7
+  - Healthy_Subject_8
+
+# Present in data/raw but never processed.
+not_ingested:
+  ALS_Subject_6: "No EMG&IMUTest CSV export exists (only Trigno .shpf session files under MVC/); functional-task trials were not exported."
+
+# Processed through Phases 0-7 but removed from every group-level analysis (Phase 8 onwards).
+excluded_from_analysis:
+  ALS_Subject_15: "Confirmed EMG device artifact on the Extensor channel (+/-2-4 V swings, RMS ~0.96 V vs. mV-range elsewhere), verified visually. Kept in a 'full set' (n=23) file for robustness checks; analysis set n=22."
+
+groups:
+  ALS: "subject name starts with 'ALS'"
+  Healthy: "subject name starts with 'Healthy'"

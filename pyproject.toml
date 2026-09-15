@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "alsexo"
+version = "1.0.0"
+description = "Reproducible EMG/IMU pipeline: functional classification of ALS and passive upper-limb exoskeleton assistance (MSc thesis, UniNa / PRISMA Lab)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.1",
+  "scipy>=1.11",
+  "pyarrow>=14",
+  "scikit-learn>=1.3",
+  "statsmodels>=0.14",
+  "matplotlib>=3.8",
+  "shap>=0.44",
+  "tqdm>=4.66",
+  "pyyaml>=6.0",
+]
+
+[project.scripts]
+alsexo = "alsexo.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

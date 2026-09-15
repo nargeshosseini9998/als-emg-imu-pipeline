@@ -1,0 +1,95 @@
+# Global numeric parameters of the pipeline (Phases 0-3, 5-8, 10).
+# Phase 4 has its own file (phase4_episodes.yaml); Phase 9 steps read their
+# parameters from the top of each step module (documented in docs/METHODS.md).
+# Every value here is an exact copy of the notebook value used for the thesis.
+
+qc:                       # Phase 0/1 — signal quality control
+  gap_factor: 2.0         # a time gap = dt > gap_factor * median(dt)
+  emg_sat_run_samples: 500   # ~0.40 s at 1259 Hz
+  imu_sat_run_samples: 60    # ~0.40 s at 148 Hz
+  sat_tol: 0.0
+  var_eps: 1.0e-10        # near-zero-variance (dead channel) threshold
+  gap_thr: 0              # trial FAILS if any gap count > gap_thr
+  sat_thr: 0.01           # trial FAILS if EMG saturation ratio > 1 %
+
+phase2:                   # EMG preprocessing
+  bp_low_hz: 20
+  bp_high_hz: 450
+  bp_order: 4
+  notch_conditional: true
+  notch_q: 30.0
+  notch_prominence_ratio: 5.0     # mean PSD 45-55 Hz / mean PSD 60-80 Hz
+  env_lp_hz: 6.0
+  env_order: 4
+  fs_fallback: 1259.259259        # used only if the QC table has no fs estimate
+  sat_run_len: 500
+  sat_tol: 0.0
+  repair_pad_seconds: 0.5
+  # Trials that FAILED QC (saturation) but were admitted after NaN-masking of
+  # the saturated span (+/- repair_pad_seconds). Exactly one trial in the dataset.
+  repair_trials:
+    Healthy_Subject_5: [lifting_exo]
+
+phase2b:                  # IMU preprocessing
+  gate_lp_hz: 10.0
+  gate_lp_order: 4
+  gravity_lp_hz: 0.5      # baseline (gravity) removal on the acceleration MAGNITUDE
+  gravity_lp_order: 2
+  fs_fallback: 148.148148
+
+phase3:                   # within-subject envelope normalisation
+  percentile: 95
+  sampling_mode: random_per_sensor
+  frac: 0.02
+  min_per_sensor: 5000
+  max_per_sensor: 200000
+  random_state: 0
+  too_small_thr: 1.0e-8
+
+phase5:                   # windowing
+  win_len_s: 0.200
+  overlap: 0.50           # -> step 0.100 s
+  min_coverage_ratio: 0.60
+  max_time_gap_s: 0.050
+  include_context: false
+  context_pad_s: 0.30
+
+phase6:                   # feature extraction
+  co_act_muscles: [Biceps, Triceps]
+  ar_order: 4
+  min_emg_samples: 32
+  min_imu_samples: 8
+  zc_th_rel: 0.01         # ZC threshold   = 0.01 * std(emg_bp)
+  wamp_th_rel: 0.01       # WAMP threshold = max(50e-6, 0.01 * std(emg_bp))
+  wamp_th_abs: 50.0e-6
+  welch_nperseg_max: 256
+  qc:
+    coverage_ok: 0.98
+    coverage_warn: 0.90
+    nan_ok: 0.10
+    nan_warn: 0.25
+
+phase7:                   # KPIs
+  duty_threshold: 0.05    # on env_norm
+  min_samples_per_muscle: 200
+  min_samples_any_emg: 200
+  co_act_muscles: [Biceps, Triceps]
+  distal_muscles: [Extensor, Flexor]   # effort side of the NMD index
+  redundancy_threshold: 0.90           # |Spearman rho| above this = redundant pair
+
+phase8:                   # feature matrix
+  min_coverage: 0.80
+  min_std: 1.0e-6
+  max_features: 20
+  impute: median
+  scaler: StandardScaler
+
+phase10:                  # supervised learning
+  features: [EMG_Extensor_RMS, EMG_Flexor_RMS, EMG_Biceps_RMS, EMG_Triceps_RMS]
+  condition: noexo        # only no-exoskeleton trials
+  aggregate: median       # per subject
+  random_state: 42
+  models:
+    logistic_regression: {C: 1.0, solver: lbfgs, max_iter: 1000, class_weight: balanced}
+    svm_rbf: {C: 1.0, kernel: rbf, gamma: scale, probability: true, class_weight: balanced}
+    random_forest: {n_estimators: 500, max_depth: 2, min_samples_leaf: 3, class_weight: balanced}

@@ -1,0 +1,39 @@
+# Post-detection manual curation of Phase-4 episodes.
+#
+# These removals were performed interactively in the original notebooks after
+# plotting the gate with the detected episodes. They are recorded here so the
+# published pipeline reproduces the exact episode set used for the thesis and so
+# the intervention is visible. Actions: drop_all | drop_longest | drop_last | drop_kth (k = 1-based, by t_on order).
+
+episode_removals:
+  Healthy_Subject_8:
+    - trial: "pick&place_low_exo"
+      action: drop_longest
+      reason: "One ~41 s 'episode' spanned rest and movement (over-merged); removed on visual inspection (04_events.ipynb cell 9)."
+  ALS_Subject_2:
+    - trial: "lifting_exo"
+      action: drop_kth
+      k: 3
+      reason: "Third of five detected episodes was a rest-period artifact; removed on visual inspection (04_events.ipynb cell 12)."
+  ALS_Subject_10:
+    - trial: "pick&place_high_exo"
+      action: drop_all
+      reason: "Broken signal in this trial; all episodes discarded (04_exceptions.ipynb cell 4)."
+    - trial: "lifting_exo"
+      action: drop_last
+      reason: "Fourth episode was a post-task artifact; removed on visual inspection (04_exceptions.ipynb cell 4)."
+  ALS_Subject_11:
+    - trial: "lifting_exo"
+      action: drop_all
+      reason: "Trial judged unusable; episodes discarded inside the detection cell (04_exceptions.ipynb cell 7)."
+  ALS_Subject_5:
+    - trial: "pick&place_high_exo"
+      action: drop_all
+      reason: "Broken trial; all 3 episodes discarded on visual inspection (04_events.ipynb cell 16)."
+  ALS_Subject_14:
+    - trial: "pick&place_high_exo"
+      action: drop_all
+      reason: "Known corrupted signal; blocked inside the detection cell (04_exceptions.ipynb cell 8)."
+    - trial: "pick&place_high_noexo"
+      action: drop_all
+      reason: "Known corrupted signal; blocked inside the detection cell (04_exceptions.ipynb cell 8)."

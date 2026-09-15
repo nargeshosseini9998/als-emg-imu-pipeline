@@ -1,0 +1,13 @@
+# Versions used for the thesis results (macOS, Python 3.12):
+numpy==2.4.4
+pandas==3.0.2
+scipy==1.17.1
+pyarrow>=14
+scikit-learn>=1.4
+statsmodels>=0.14
+matplotlib>=3.8
+shap>=0.44
+tqdm>=4.66
+pyyaml>=6.0
+jupyter>=1.0
+nbstripout>=0.7
